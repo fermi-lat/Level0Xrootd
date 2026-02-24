@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline
+  xmlns="http://glast-ground.slac.stanford.edu/pipeline"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline https://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.3/pipeline.xsd">
+
+<!--
+    Changes:
+    2024-09-04  NO: MOVING TO S3DF
+-->
+  <task name="Level0Xrootd" type="Data" version="2.1">
+    <variables>
+      <var name="JOBSITE">S3DFDATA</var>
+      <var name="WALL_TIME"> 0:30:00 </var>             <!-- 30 minutes by default. Format: H:M:S -->
+      <var name="MAX_CPU">1</var>
+      <var name="GPL_BATCHRESOURCES">milano</var>
+      <var name="GPL_BATCHACCOUNT">fermi:L1</var>
+      <var name="GPL_XTRABATCHRESOURCES"></var>         <!-- intentionally left EMPTY - for rollback -->
+      <var name="GPL_XTRABATCHOPTIONS"></var>
+      <var name="GPL_BATCHOPTIONS">--time ${WALL_TIME} --partition ${GPL_BATCHRESOURCES} --account ${GPL_BATCHACCOUNT} ${GPL_XTRABATCHOPTIONS} ${GPL_XTRABATCHRESOURCES}</var>
+      <!-- container and wrapper -->
+      <var name="container_image">/sdf/group/fermi/sw/containers/fermi-rhel6.sif</var>
+      <var name="container_env"></var>
+      <var name="container_volumes">--bind /sdf/group/fermi/n:/nfs/farm/g/glast --bind /sdf/group/fermi/a:/afs/slac.stanford.edu/g/glast --bind /sdf/group/fermi/a:/afs/slac/g/glast --bind /sdf:/sdf --bind /lscratch:/lscratch --bind /sdf/group/fermi/sw/package:/afs/slac/package --bind /sdf/group/fermi/sw/package:/afs/slac.stanford.edu/package --bind /sdf/group/fermi/sw/containers/rhel6/opt/TWWfsw:/opt/TWWfsw --bind /sdf/group/fermi/sw/containers/rhel6/usr/local:/usr/local --bind /sdf/group/fermi/sw/java/jdk/jdk8:/usr/lib/jvm/jre-1.8.0-openjdk</var>
+      <var name="container_wrap">singularity exec ${container_env} ${container_volumes} ${container_image}</var>
+
+      <var name="segmentDate">2008-06-24</var>
+      <var name="segmentTime">00:00:00</var>
+      <var name="segmentSize">day</var>
+      <var name="segmentSource">sitedep</var>
+      <var name="segmentSCID">sitedep</var>
+      <var name="taskBase">/sdf/group/fermi/ground/PipelineConfig/Level0Xrootd</var>
+      <var name="batchQueue">long</var>
+    </variables>
+    <process name="copydata" site="${JOBSITE}">
+      <job batchOptions=" ${GPL_BATCHOPTIONS} " 
+      executable="${container_wrap} ${taskBase}/scripts/level0-xrootd.sh ${segmentDate} ${segmentTime} ${segmentSize}"/>
+    </process>
+
+    <process name="logsuccess" site="${JOBSITE}">
+      <job batchOptions=" ${GPL_BATCHOPTIONS} " 
+      executable="${container_wrap} ${taskBase}/scripts/logsuccess.sh "/>
+      <depends>
+	<after process="copydata" status="SUCCESS" />
+      </depends>
+    </process>
+
+    <process name="logfailure">
+      <job batchOptions=" ${GPL_BATCHOPTIONS} " 
+            executable="${container_wrap} ${taskBase}/scripts/logfailure.sh "/>
+      <depends>
+	<after process="copydata" status="FAILED"/>
+      </depends>
+    </process>
+  </task>
+</pipeline>

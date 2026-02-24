@@ -1,0 +1,25 @@
+/configDispatch/1.3/Fri Mar 16 18:31:14 2007//
+/flavor_devel/1.1/Mon Oct  1 14:16:45 2007//
+/flavor_nightly_devel/1.1/Mon Oct  1 14:16:45 2007//
+/flavor_nightly_prod/1.1/Mon Oct  1 14:16:46 2007//
+/flavor_prod/1.1/Mon Oct  1 14:16:46 2007//
+/flavor_test/1.1/Mon Oct  1 14:16:46 2007//
+/overrideLATCdecode.sh/1.1/Fri Oct  5 14:28:36 2007//
+/overrideLATCmerge.sh/1.1/Fri Oct  5 14:31:00 2007//
+/haltCleanup/1.1/Mon Oct  1 18:23:36 2007//
+/haltL1/1.1/Wed Sep 26 15:00:36 2007//
+/haltOnline/1.1/Fri Sep 28 18:24:03 2007//
+/sitedep.ini/1.1/Wed Jan 23 16:37:23 2008//
+/README/1.1/Wed Jan 23 22:15:55 2008//
+/LCItype/1.1/Fri Feb 15 20:03:57 2008//
+/LPAtype/1.1/Fri Feb 15 20:03:53 2008//
+/ChunkScaling/1.1/Sat Feb 16 00:06:13 2008//
+/LPAtype.LPA/1.1/Tue Mar  4 22:11:15 2008//
+/LPAtype.MC/1.1/Tue Mar  4 22:11:16 2008//
+/maxEvents.125K/1.1/Tue Mar  4 22:12:22 2008//
+/maxEvents.1M/1.1/Tue Mar  4 22:12:22 2008//
+/stagedir.AFS/1.1/Wed Mar 12 14:42:04 2008//
+/stagedir.NFS/1.2/Sun Jul  6 00:54:15 2008//
+/haltStage/1.1/Fri Jul 18 14:55:10 2008//
+/stagedir.AFS.6/1.1/Wed Jul 16 14:26:29 2008//
+D
