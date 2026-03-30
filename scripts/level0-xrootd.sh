@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 #
 # This script consolidates a segment of the level0 raw-packet archive and
 # copies it into xrootd storage.  It takes the following arguments:
@@ -30,8 +30,8 @@ dest_xroot="/glast/level0"
 dateseg="$1 $2"
 segsize="$3"
 if [ -z "$4" ] ; then
-    if [ -d /scratch ] ; then
-	archdir="/scratch/level0-xrootd-$$/level0"
+    if [ -d /lscratch ] ; then
+	archdir="/lscratch/level0-xrootd-$$/level0"
     else
 	archdir="/tmp/level0-xrootd-$$/level0"
     fi
@@ -73,7 +73,7 @@ echo "processing $segsize of $utcdir"
 indir="$srcdir/$sciddir/$utcdir"
 echo "merging files from $indir to $archdir"
 for f in `find $indir -type f -name 's????a????t??????????*' -print |sort` ; do
-    echo "merging $f"
+    echo "=> $(date) merging $f"
     L0Archiver.py --arch $archdir -k 0 --quiet $f || exit 1
 done
 
@@ -87,6 +87,7 @@ pushd $archdir 2>&1 >/dev/null
 for f in `find $sciddir -type f -print | sort` ; do
     fn=`basename $f .0000000000`
     fd=`dirname $f`
+    echo "=> $(date) copying $f"
     run-xrdcp.py $f $dest_xroot/$fd/$fn || exit 1
 done
 popd 2>&1 >/dev/null

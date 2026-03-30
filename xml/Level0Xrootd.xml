@@ -8,10 +8,10 @@
     Changes:
     2024-09-04  NO: MOVING TO S3DF
 -->
-  <task name="Level0Xrootd" type="Data" version="2.1">
+  <task name="Level0Xrootd" type="Data" version="2.3">
     <variables>
       <var name="JOBSITE">S3DFDATA</var>
-      <var name="WALL_TIME"> 0:30:00 </var>             <!-- 30 minutes by default. Format: H:M:S -->
+      <var name="WALL_TIME"> 24:00:00 </var>             <!-- 30 minutes by default. Format: H:M:S -->
       <var name="MAX_CPU">1</var>
       <var name="GPL_BATCHRESOURCES">milano</var>
       <var name="GPL_BATCHACCOUNT">fermi:L1</var>
